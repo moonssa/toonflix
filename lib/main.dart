@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:toonflix/widgets/button.dart';
 import 'package:toonflix/widgets/currency.dart';
 
@@ -119,26 +117,23 @@ class MyApp extends StatelessWidget {
                 code: "EUR",
                 icon: Icons.euro_rounded,
                 isInverted: false,
+                order: 1,
               ),
-              Transform.translate(
-                offset: const Offset(0, -20),
-                child: const CurrencyCard(
-                  name: "Bitcoin",
-                  amount: "9 785",
-                  code: "BTC",
-                  icon: Icons.currency_bitcoin_rounded,
-                  isInverted: true,
-                ),
+              const CurrencyCard(
+                name: "Bitcoin",
+                amount: "9 785",
+                code: "BTC",
+                icon: Icons.currency_bitcoin_rounded,
+                isInverted: true,
+                order: 2,
               ),
-              Transform.translate(
-                offset: const Offset(0, -40),
-                child: const CurrencyCard(
-                  name: "Dollar",
-                  amount: "6 428",
-                  code: "USD",
-                  icon: Icons.attach_money_outlined,
-                  isInverted: false,
-                ),
+              const CurrencyCard(
+                name: "Dollar",
+                amount: "6 428",
+                code: "USD",
+                icon: Icons.attach_money_outlined,
+                isInverted: false,
+                order: 3,
               ),
             ],
           ),
