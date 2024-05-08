@@ -45,6 +45,14 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  onResetPressed() {
+    timer.cancel();
+    setState(() {
+      isRunning = false;
+      totalSeconds = initialSeconds;
+    });
+  }
+
   String format(int seconds) {
     var duration = Duration(seconds: seconds);
     return (duration.toString().split(".").first.substring(2, 7));
@@ -74,15 +82,34 @@ class _HomeScreenState extends State<HomeScreen> {
               flex: 23,
               child: Container(
                 alignment: Alignment.center,
-                child: IconButton(
-                  iconSize: 120,
-                  color: Theme.of(context).cardColor,
-                  icon: Icon(
-                    isRunning
-                        ? Icons.pause_circle_outline_outlined
-                        : Icons.play_circle_outline,
-                  ),
-                  onPressed: isRunning ? onStopPressed : onStartPressed,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Transform.translate(
+                      offset: const Offset(30, 0),
+                      child: IconButton(
+                        iconSize: 120,
+                        color: Theme.of(context).cardColor,
+                        icon: Icon(
+                          isRunning
+                              ? Icons.pause_circle_outline_outlined
+                              : Icons.play_circle_outline,
+                        ),
+                        onPressed: isRunning ? onStopPressed : onStartPressed,
+                      ),
+                    ),
+                    Transform.translate(
+                      offset: const Offset(10, 20),
+                      child: IconButton(
+                        iconSize: 40,
+                        color: Theme.of(context).cardColor,
+                        icon: const Icon(
+                          Icons.refresh_outlined,
+                        ),
+                        onPressed: onResetPressed,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
