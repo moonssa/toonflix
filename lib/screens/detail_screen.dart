@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:toonflix/models/webtoon_episode_model.dart';
+import 'package:toonflix/models/wentoon_detail_model.dart';
+import 'package:toonflix/services/api_service.dart';
 
-class DetailScreen extends StatelessWidget {
+class DetailScreen extends StatefulWidget {
   final String title, thumb, id;
   const DetailScreen({
     super.key,
@@ -8,6 +11,21 @@ class DetailScreen extends StatelessWidget {
     required this.thumb,
     required this.id,
   });
+
+  @override
+  State<DetailScreen> createState() => _DetailScreenState();
+}
+
+class _DetailScreenState extends State<DetailScreen> {
+  late Future<WebtoonDetailModel> webtoon;
+  late Future<List<WebtoonEpisodeModel>> episodes;
+
+  @override
+  void initState() {
+    super.initState();
+    webtoon = ApiService.getToonById(widget.id);
+    episodes = ApiService.getLatestEpisodesById(widget.id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +38,7 @@ class DetailScreen extends StatelessWidget {
         shadowColor: Colors.black,
         elevation: 2,
         title: Text(
-          title,
+          widget.title,
           style: const TextStyle(
             fontFamily: 'NanumBrushScript',
             fontSize: 32,
@@ -37,7 +55,7 @@ class DetailScreen extends StatelessWidget {
                 height: 20,
               ),
               Hero(
-                tag: id,
+                tag: widget.id,
                 child: Container(
                   width: 250,
                   clipBehavior: Clip.hardEdge,
@@ -51,7 +69,7 @@ class DetailScreen extends StatelessWidget {
                         ),
                       ]),
                   child: Image.network(
-                    thumb,
+                    widget.thumb,
                     headers: const {
                       'Referer': 'https://comic.naver.com',
                     },
@@ -61,11 +79,13 @@ class DetailScreen extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              Text(title,
-                  style: const TextStyle(
-                    fontSize: 32,
-                    fontFamily: "Dongle-Regular",
-                  )),
+              Text(
+                widget.title,
+                style: const TextStyle(
+                  fontSize: 32,
+                  fontFamily: "Dongle-Regular",
+                ),
+              ),
             ],
           ),
         ],
