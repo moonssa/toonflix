@@ -46,14 +46,14 @@ class _DetailScreenState extends State<DetailScreen> {
           ),
         ),
       ),
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: Column(
         children: [
-          Column(
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(
-                height: 20,
-              ),
               Hero(
                 tag: widget.id,
                 child: Container(
@@ -76,17 +76,45 @@ class _DetailScreenState extends State<DetailScreen> {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                widget.title,
-                style: const TextStyle(
-                  fontSize: 32,
-                  fontFamily: "Dongle-Regular",
-                ),
-              ),
             ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          FutureBuilder(
+            future: webtoon,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 50,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        snapshot.data!.about,
+                        style: const TextStyle(
+                          // fontFamily: "Dongle-Regular",
+                          fontSize: 16,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        "${snapshot.data!.genre} / ${snapshot.data!.age}",
+                        style: const TextStyle(
+                          // fontFamily: "Dongle-Regular",
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }
+              return const Text("...");
+            },
           ),
         ],
       ),
